@@ -3,6 +3,10 @@ import time
 import csv
 from datetime import datetime
 
+# Get the current datetime
+now = datetime.now()
+dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
+
 # Open serial connection (replace '/dev/ttyACM0' with your device path)
 ser = serial.Serial('/dev/ttyACM0', 9600)
 
@@ -10,7 +14,8 @@ ser = serial.Serial('/dev/ttyACM0', 9600)
 time.sleep(2)
 
 # Open a CSV file in write mode
-with open('serial_data.csv', 'w', newline='') as file:
+filename = f'serial_data_{dt_string}.csv'
+with open(filename, 'w', newline='') as file:
     writer = csv.writer(file)
 
     while True:
@@ -20,7 +25,6 @@ with open('serial_data.csv', 'w', newline='') as file:
 
             # Get the current datetime
             now = datetime.now()
-
             # Write the line and datetime to the CSV file
             writer.writerow([line, now])
 
