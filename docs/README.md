@@ -1,0 +1,3 @@
+# MegaTrond
+
+Dataloggingsprosjekt
