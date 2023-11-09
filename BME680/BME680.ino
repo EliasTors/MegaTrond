@@ -9,19 +9,19 @@ Adafruit_BME680 bme; // create BME680 object
 
 void setup() {
     pinMode(lyd,INPUT);
-    pinMode(lys, INPUT)
+    pinMode(lys, INPUT);
     Serial.begin(9600);
     while (!Serial); // wait for serial port to connect
     if (!bme.begin(0x76)) {
         Serial.println(F("Could not find a valid BME680 sensor, check wiring!!"));
         while (1);
     }
-    Serial.println("Temb,Pressure, humidity, gas, lyd, lys");
+    Serial.println("Temp,Pressure, humidity, gas, lyd, lys");
 }
 
 void loop() {
     int lydniva = analogRead(lyd);
-    int lysniva = analogRead(lys)
+    int lysniva = analogRead(lys);
     if (! bme.performReading()) {
         Serial.println("Failed to perform reading :(");
         return;
