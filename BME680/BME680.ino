@@ -10,7 +10,7 @@ Adafruit_BME680 bme; // create BME680 object
 void setup() {
     pinMode(lyd,INPUT);
     pinMode(lys, INPUT);
-    Serial.begin(9600);
+    Serial.begin(600);
     while (!Serial); // wait for serial port to connect
     if (!bme.begin(0x76)) {
         Serial.println(F("Could not find a valid BME680 sensor, check wiring!!"));
