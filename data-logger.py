@@ -1,3 +1,6 @@
+# cd /home/password/data-logger/
+# python data-logger.py
+
 import serial
 import time
 import csv
