@@ -12,6 +12,7 @@ class plotter:
         data['date'] = data['datetime'].dt.date
         data['time'] = data['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))
 
+        #Dato til rom:
         room_codes = {datetime.date(2023, 11, 16): 'R11', 
                     datetime.date(2023, 11, 17): 'R22', 
                     datetime.date(2023, 11, 18): 'R04', 
