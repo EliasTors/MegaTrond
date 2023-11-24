@@ -28,6 +28,9 @@ class dataHandler:
         # Remove lines containing "error" or "Temp,Pressure, humidity, gas, lyd, lys"
         content = [line for line in content if "error" not in line and "Temp,Pressure, humidity, gas, lyd, lys" not in line]
 
+        # Remove lines that are not complete (do not contain all the expected columns)
+        content = [line for line in content if len(line.split(',')) == 7]
+
         # Replace "\n\n" with "\n" and '""' with ''
         content = [line.replace('\n\n', '\n').replace('"', '') for line in content]
 
