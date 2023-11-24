@@ -1,35 +1,48 @@
-# cd /home/password/data-logger/
-# python data-logger.py
-
+import sqlite3
 import serial
 import time
-import csv
 from datetime import datetime
 
-# Get the current datetime
-now = datetime.now()
-dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
-
-# Open serial connection (replace '/dev/ttyACM0' with your device path)
-ser = serial.Serial('/dev/ttyACM0', 9600)
+# Open serial connection (replace '/dev/ttyUSB0' with your device path)
+ser = serial.Serial('/dev/ttyACM0', 600)
 
 # Wait for the Arduino to initialize
 time.sleep(2)
 
-# Open a CSV file in write mode
-filename = f'serial_data_{dt_string}.csv'
-with open(filename, 'w', newline='') as file:
-    writer = csv.writer(file)
+# Connect to the SQLite database
+conn = sqlite3.connect('serial_data.db')
+cursor = conn.cursor()
 
+# Create a table for the data
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS data (
+        datetime TEXT,
+        line TEXT
+    )
+''')
+
+try:
     while True:
         if ser.in_waiting:
             # Read a line from the serial connection
-            line = ser.readline().decode('utf-8').rstrip()
+            line = ser.readline()
 
-            # Get the current datetime
-            now = datetime.now()
-            # Write the line and datetime to the CSV file
-            writer.writerow([line, now])
+            try:
+                line = line.decode('utf-8').rstrip()
+            except UnicodeDecodeError:
+                print("Could not decode line, skipping...")
+                line = "error"
 
-            # Flush the file to force the data to be written to disk
-            file.flush()
+            now = datetime.now().isoformat()
+
+            # Insert the line and datetime into the database
+            cursor.execute('INSERT INTO data VALUES (?, ?)', (now, line))
+
+            # Commit the changes
+            conn.commit()
+
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    # Close the connection
+    conn.close()

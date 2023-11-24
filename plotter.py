@@ -1,7 +1,9 @@
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import datetime
+
 
 class plotter:
     def plot_data(self, filename, interval):
@@ -42,5 +44,4 @@ class plotter:
 
         plt.tight_layout()
         plt.show()
-
 
