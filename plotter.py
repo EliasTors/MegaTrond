@@ -7,17 +7,17 @@ import datetime
 
 class plotter:
     def plot_data(self, filename, interval):
-        data = pd.read_csv(filename)
-
-        data['datetime'] = pd.to_datetime(data['datetime'])
-
+        data = pd.read_csv(filename, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%dT%H:%M:%S.%f"))        
         data['date'] = data['datetime'].dt.date
-        data['time'] = data['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))
+        data['time'] = data['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))      
+        
+        print("Unique dates in CSV file:", data['date'].unique())
+  
         #Dato til rom:
-        room_codes = {str(datetime.date(2023, 11, 20)): 'R11', 
-                    str(datetime.date(2023, 11, 17)): 'R22', 
-                    str(datetime.date(2023, 11, 18)): 'R04', 
-                    str(datetime.date(2023, 11, 19)): 'FYS'}
+        room_codes = {datetime.date(2023, 11, 17): 'R22', 
+                    datetime.date(2023, 11, 18): 'R04', 
+                    datetime.date(2023, 11, 19): 'FYS',
+                    datetime.date(2023, 11, 20): 'R11'}
         data['room'] = data['date'].map(room_codes)
 
         fig, axs = plt.subplots(6, figsize=(10, 20))
