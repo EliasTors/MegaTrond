@@ -1,5 +1,6 @@
 import sqlite3
 import pandas as pd
+from datetime import timedelta
 
 class dataHandler:
     def removeQ(filepath):
@@ -36,4 +37,26 @@ class dataHandler:
 
         with open(csv_file, 'w') as file:
             file.writelines(content)
-        
+            
+class dataFixer:
+    def shift_datetime(filepath, shift):
+        # Connect to the SQLite database
+        conn = sqlite3.connect(filepath)
+
+        # Read the data into a pandas DataFrame
+        df = pd.read_sql_query("SELECT * FROM data", conn)
+
+        # Create a copy of the DataFrame to avoid modifying the original data
+        df_copy = df.copy()
+
+        # Convert the first column to datetime if it's not already
+        df_copy[df_copy.columns[0]] = pd.to_datetime(df_copy[df_copy.columns[0]])
+
+        # Shift the datetime column 83 hours forward
+        df_copy[df_copy.columns[0]] = df_copy[df_copy.columns[0]] + timedelta(hours=shift)
+
+        # Write the updated DataFrame back to the SQLite database
+        df_copy.to_sql('data', conn, if_exists='replace', index=False)
+
+        # Close the connection
+        conn.close()
