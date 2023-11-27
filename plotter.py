@@ -6,13 +6,18 @@ import datetime
 
 
 class plotter:
-    def plot_data(self, filename, interval):
-        data = pd.read_csv(filename, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%dT%H:%M:%S.%f"))        
-        data['date'] = data['datetime'].dt.date
-        data['time'] = data['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))      
+    def plot_data(self, filenames, interval):
+        dataframes = []
+        for filename in filenames:
+            df = pd.read_csv(filename, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%dT%H:%M:%S.%f"))
+            df['date'] = df['datetime'].dt.date
+            df['time'] = df['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))
+            dataframes.append(df)
+            
+        data = pd.concat(dataframes, ignore_index=True)
         
         print("Unique dates in CSV file:", data['date'].unique())
-  
+    
         #Dato til rom:
         room_codes = {datetime.date(2023, 11, 16): 'Elais',
                     datetime.date(2023, 11, 17): 'R22', 
@@ -46,4 +51,3 @@ class plotter:
 
         plt.tight_layout()
         plt.show()
-
