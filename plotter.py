@@ -14,10 +14,13 @@ class plotter:
         print("Unique dates in CSV file:", data['date'].unique())
   
         #Dato til rom:
-        room_codes = {datetime.date(2023, 11, 17): 'R22', 
+        room_codes = {datetime.date(2023, 11, 16): 'Elais',
+                    datetime.date(2023, 11, 17): 'R22', 
                     datetime.date(2023, 11, 18): 'R04', 
                     datetime.date(2023, 11, 19): 'FYS',
-                    datetime.date(2023, 11, 20): 'R11'}
+                    datetime.date(2023, 11, 20): 'R03',
+                    datetime.date(2023, 11, 24): 'FYS1',
+                    datetime.date(2023, 11, 27): 'Tekfors'}
         data['room'] = data['date'].map(room_codes)
 
         fig, axs = plt.subplots(6, figsize=(10, 20))
