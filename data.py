@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 from datetime import timedelta
 from datetime import datetime
+import pandas as pd
 
 
 class dataHandler:
@@ -97,3 +98,27 @@ class dataHandler:
         # Close the connection
         conn.close()
 '''
+
+
+    def clean_csv(csv_file, out):
+        # Read the CSV file
+        with open (csv_file, 'r') as file:
+            content = file.readlines()
+
+        # Modify the column names
+        #df.columns = ['datetime', 'temp', 'pressure', 'humidity', 'gas', 'lyd', 'lys']
+        
+        
+    # Filter and modify content
+        content = [
+        line.replace('\n\n', '\n').replace('"', '')
+        for line in content
+        if "error" not in line
+        and "Temp,Pressure, humidity, gas, lyd, lys" not in line
+        and len(line.split(',')) == 7
+        ]
+        
+        
+        # Write the modified data back to the CSV file
+        with open(out, 'w') as file:
+            file.writelines(content)
