@@ -29,11 +29,11 @@ jobs:
           done
 
       - name: Move README
-        run: mv README.md README.ipynb.md
+        run: mv docs/README.md docs/README.ipynb.md
 
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Convert Jupyter notebooks to Markdown" && git push
+          git
