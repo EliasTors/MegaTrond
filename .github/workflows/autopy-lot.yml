@@ -15,6 +15,6 @@ jobs:
           input_type:
           comment_magics:
           split_at_heading:
-          output_type: md
+          output_type: markdown
           output_dir: './autopy-lot/'
 
