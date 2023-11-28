@@ -16,9 +16,7 @@ class plotter:
             dataframes.append(df)
             
         data = pd.concat(dataframes, ignore_index=True)
-        
-        print("Unique dates in CSV file:", data['date'].unique())
-    
+            
         #Dato til rom:
         room_codes = {
                     datetime.date(2023, 11, 21): 'R04', 

@@ -79,7 +79,7 @@ class dataHandler:
         #df.columns = ['datetime', 'temp', 'pressure', 'humidity', 'gas', 'lyd', 'lys']
         
         
-    # Filter and modify content
+        # Filter and modify content
         content = [
         line.replace('\n\n', '\n').replace('"', '')
         for line in content
@@ -88,30 +88,23 @@ class dataHandler:
         and len(line.split(',')) == 7
         ]
         
-        
         # Write the modified data back to the CSV file
         with open(out, 'w') as file:
             file.writelines(content)
 
 class estemation:
     def fill_time_gaps(csv_data, freq='T'):
-        # Read the CSV data
-        df = pd.read_csv(csv_data)
-
-        # Convert 'datetime' column to datetime
-        df['datetime'] = pd.to_datetime(df['datetime'], format="%Y-%m-%d %H:%M:%S.%f")
+        # Read the CSV data and convert 'datetime' column to datetime
+        df = pd.read_csv(csv_data, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%d %H:%M:%S.%f"))
 
         # Set 'datetime' as the index
         df.set_index('datetime', inplace=True)
 
-        # Resample the data at a regular interval (e.g., every second)
-        df_resampled = df.resample(freq).mean()
-
-        # Fill gaps in the data
-        df_filled = df_resampled.ffill()
-        df_filled.reset_index(inplace=True)
+        # Resample the data at a regular interval (e.g., every second) and fill gaps in the data
+        df_filled = df.resample(freq).mean().ffill().reset_index()
 
         return df_filled
+
 
 
 
