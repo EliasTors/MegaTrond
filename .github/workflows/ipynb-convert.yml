@@ -34,4 +34,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Convert rapport.ipynb to README.md"
-          git push https://${{ secrets.PAT }}@github.com/EliasTors/MegaTrond.git
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/EliasTors/MegaTrond.git
