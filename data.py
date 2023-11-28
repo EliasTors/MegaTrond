@@ -69,37 +69,6 @@ class dataHandler:
             # Commit the changes
             conn.commit()
 
-
-        '''
-        # Connect to the SQLite database
-        conn = sqlite3.connect(filepath)
-
-        # Read the data into a pandas DataFrame
-        df = pd.read_sql_query("SELECT * FROM data", conn)
-
-        # Create a copy of the DataFrame to avoid modifying the original data
-        df_copy = df.copy()
-
-        # Convert the first column to datetime if it's not already
-        df_copy[df_copy.columns[0]] = pd.to_datetime(df_copy[df_copy.columns[0]], format='%Y-%m-%d %H:%M:%S.%f', errors='coerce')
-
-        # Calculate the time difference between the start datetime and the first datetime in the DataFrame
-        start_datetime = pd.to_datetime(start_datetime)
-        
-        # Calculate the time difference between the start datetime and the first datetime in the DataFrame
-        time_diff = start_datetime - df_copy[df_copy.columns[0]].min()
-
-        # Shift the datetime column by the calculated time difference
-        df_copy[df_copy.columns[0]] = df_copy[df_copy.columns[0]] + time_diff
-
-        # Write the updated DataFrame to a new table in the SQLite database
-        df_copy.to_sql('shifted_data', conn, if_exists='replace', index=False)
-
-        # Close the connection
-        conn.close()
-'''
-
-
     def clean_csv(csv_file, out):
         # Read the CSV file
         with open (csv_file, 'r') as file:
@@ -122,3 +91,23 @@ class dataHandler:
         # Write the modified data back to the CSV file
         with open(out, 'w') as file:
             file.writelines(content)
+
+class estemation:
+    def extrapolate_data(csv_file, start_datetime, end_datetime):
+        # Read the CSV file
+        df = pd.read_csv(csv_file)
+
+        # Convert datetime column to datetime type with the specified format
+        df['datetime'] = pd.to_datetime(df['datetime'], format="%Y-%m-%d %H:%M:%S.%f")
+
+        # Convert start_datetime and end_datetime to datetime type with the specified format
+        start_datetime = pd.to_datetime(start_datetime, format="%Y-%m-%d %H:%M:%S.%f")
+        end_datetime = pd.to_datetime(end_datetime, format="%Y-%m-%d %H:%M:%S.%f")
+
+        # Filter data within the specified datetime range
+        filtered_df = df[(df['datetime'] >= start_datetime) & (df['datetime'] <= end_datetime)]
+
+        # Extrapolate data using interpolation
+        extrapolated_df = filtered_df.interpolate(method='linear')
+
+        return extrapolated_df
