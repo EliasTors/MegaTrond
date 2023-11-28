@@ -3,7 +3,7 @@ name: Jupyter to Markdown
 on:
   push:
     paths:
-      - '**.ipynb'
+      - 'rapport.ipynb'
 
 jobs:
   convert:
@@ -23,17 +23,14 @@ jobs:
           pip install nbconvert notedown
 
       - name: Convert Jupyter to Markdown
-        run: |
-          for notebook in $(find . -name "*.ipynb"); do
-            jupyter nbconvert --to markdown $notebook
-          done
+        run: jupyter nbconvert --to markdown rapport.ipynb
 
       - name: Move README
-        run: mv docs/README.md docs/README.ipynb.md
+        run: mv rapport.md docs/README.md
 
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git
+          git commit -m "Convert rapport.ipynb to README.md" && git push
