@@ -10,6 +10,7 @@ class plotter:
         dataframes = []
         for filename in filenames:
             df = pd.read_csv(filename, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%d %H:%M:%S.%f"))
+            
             df['date'] = df['datetime'].dt.date
             df['time'] = df['datetime'].apply(lambda x: datetime.datetime.combine(datetime.date.today(), x.time()))
             dataframes.append(df)

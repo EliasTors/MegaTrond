@@ -1,3 +1,4 @@
+from io import StringIO
 import sqlite3
 import pandas as pd
 from datetime import timedelta
@@ -93,21 +94,24 @@ class dataHandler:
             file.writelines(content)
 
 class estemation:
-    def extrapolate_data(csv_file, start_datetime, end_datetime):
-        # Read the CSV file
-        df = pd.read_csv(csv_file)
+    def fill_time_gaps(csv_data, freq='T'):
+        # Read the CSV data
+        df = pd.read_csv(csv_data)
 
-        # Convert datetime column to datetime type with the specified format
+        # Convert 'datetime' column to datetime
         df['datetime'] = pd.to_datetime(df['datetime'], format="%Y-%m-%d %H:%M:%S.%f")
 
-        # Convert start_datetime and end_datetime to datetime type with the specified format
-        start_datetime = pd.to_datetime(start_datetime, format="%Y-%m-%d %H:%M:%S.%f")
-        end_datetime = pd.to_datetime(end_datetime, format="%Y-%m-%d %H:%M:%S.%f")
+        # Set 'datetime' as the index
+        df.set_index('datetime', inplace=True)
 
-        # Filter data within the specified datetime range
-        filtered_df = df[(df['datetime'] >= start_datetime) & (df['datetime'] <= end_datetime)]
+        # Resample the data at a regular interval (e.g., every second)
+        df_resampled = df.resample(freq).mean()
 
-        # Extrapolate data using interpolation
-        extrapolated_df = filtered_df.interpolate(method='linear')
+        # Fill gaps in the data
+        df_filled = df_resampled.ffill()
+        df_filled.reset_index(inplace=True)
 
-        return extrapolated_df
+        return df_filled
+
+
+
