@@ -3,10 +3,23 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import datetime
+import warnings
+
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 
 class plotter:
-    def plot_data(self, filenames, interval):
+    def plot_data(self, filenames: list[str], interval: str) -> None:
+        """
+        Plots data from multiple CSV files.
+
+        Args:
+            filenames (list): List of file paths to the CSV files.
+            interval (str): Time interval for resampling the data.
+
+        Returns:
+            None
+        """
         dataframes = []
         for filename in filenames:
             df = pd.read_csv(filename, parse_dates=['datetime'], date_parser=lambda x: pd.to_datetime(x, format="%Y-%m-%d %H:%M:%S.%f"))
@@ -35,8 +48,14 @@ class plotter:
             axs[1].plot(data_room['time'], data_room['pressure'], label=f'Pressure in {room}')
             axs[2].plot(data_room['time'], data_room['humidity'], label=f'Humidity in {room}')
             axs[3].plot(data_room['time'], data_room['gas'], label=f'Gas in {room}')
+            
+            
             axs[4].plot(data_room['time'], data_room['lyd'], label=f'Lyd in {room}')
             axs[5].plot(data_room['time'], data_room['lys'], label=f'Lys in {room}')
+            
+            # Flip the y-axis
+            axs[4].invert_yaxis()
+            axs[5].invert_yaxis()
 
         for i, label in enumerate(['Temperature (°C)', 'Pressure (hPa)', 'Humidity (%)', 'Gas', 'Lyd', 'Lys']):
             axs[i].set_xlabel('Time')
