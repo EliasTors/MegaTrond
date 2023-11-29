@@ -38,3 +38,15 @@ jobs:
         git add *.png  # add this line to also commit any PNG images
         git commit -m "Update README.md"
         git push
+
+
+
+  deploy:
+    needs: convert
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.PAT }}
+        publish_dir: ./ # or the directory where your markdown files are located
