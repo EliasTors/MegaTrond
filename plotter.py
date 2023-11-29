@@ -9,7 +9,7 @@ warnings.filterwarnings('ignore', category=FutureWarning)
 
 
 class plotter:
-    def plot_data(self, filenames: list[str], interval: str) -> None:
+    def plot_data(self, filenames, interval) -> None:
         """
         Plots data from multiple CSV files.
 
