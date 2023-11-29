@@ -1,0 +1,31 @@
+name: Convert Jupyter Notebook to Markdown
+
+on:
+  push:
+    paths:
+      - 'rapport.ipynb'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Quarto CLI
+        run: pip install quarto
+
+      - name: Convert Jupyter notebook to Markdown
+        run: quarto convert rapport.ipynb --to markdown
+
+      - name: Commit and push
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: 'Update README.md from rapport.ipynb'
+          add: 'README.md'
