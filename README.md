@@ -1,7 +1,7 @@
 # MegaTrond
 ## Et datainsamlings prosjekt, Teknologi og forskningslære H23
 
-Laget av: Elias, Hedda og Aksel
+Laget av: Elias Torstensen, Hedda Hestvik og Aksel Schrader
 
 # Oppgave
 Bruk arduino og sensorer for å gjøre undersøkelser og samle inn data. Dataene skal lagres til fil og bearbeides for så å presenteres på en oversiktlig måte.
