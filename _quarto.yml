@@ -1,5 +1,5 @@
 title: "MegaTrond Pub"
-format: website
+format: asciidoc
 site:
   output_dir: "_site"
 pages:
