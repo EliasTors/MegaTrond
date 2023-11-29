@@ -30,6 +30,7 @@ jobs:
     - name: Rename to README.md
       run: mv rapport.md README.md
 
+<<<<<<< HEAD
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
@@ -38,3 +39,10 @@ jobs:
         git commit -m "Update README.md"
         git push
 
+=======
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.PAT }}
+        branch: ${{ github.ref }}
+>>>>>>> 1a86c75f608442a094c4ef99465c0c79d0b42fb2
