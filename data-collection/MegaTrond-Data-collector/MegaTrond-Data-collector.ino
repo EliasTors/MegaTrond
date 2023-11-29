@@ -1,5 +1,3 @@
-// Copilot:
-
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME680.h>
