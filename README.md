@@ -93,7 +93,7 @@ Feilkildene som kan oppstå går hovedsakelig ut på sensorene; kvaliteten, plas
  
 ## Korrelasjoner
 
-Vi opplevde en hendelse på rom 04 som tydelig kommer til syne på dataen. Vi antar at noen åpnet vinduet bak arduinoen, som førte til at arduinoen falt ned på varmeovnen. Dette vises i dataene ved at temperaturen plutselig øker når sensorene kommer nærmere varmeovnen, gassen synker plutselig som følge av at vinduet åpnes, og lyden øker, samt lyset synker. Da vi hentet arduinoen på slutten av dagen fra rom 04 hang den langs varmeovnen. 
+Vi opplevde en hendelse på rom 04 som tydelig kommer til syne på dataen. Vi antar at noen åpnet vinduet bak arduinoen, som førte til at arduinoen falt ned på varmeovnen. Dette vises i dataene ved at temperaturen plutselig øker når sensorene kommer nærmere varmeovnen, gassen synker plutselig som følge av at vinduet åpnes, og lyden øker, samt lyset synker. Da vi hentet arduinoen på slutten av dagen fra rom 04 hang den langs varmeovnen.
 
 ## Utvidelser
 
