@@ -1,0 +1,4 @@
+title: "MegaTrond Pub"
+format: website
+site:
+  output_dir: "_site"
