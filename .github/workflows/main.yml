@@ -14,15 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          python-version: '3.9'
+          node-version: '14'
 
       - name: Install Quarto CLI
-        run: |
-          curl -sSL https://github.com/quarto-dev/quarto-cli/releases/latest/download/quarto-cli-linux-amd64.tar.gz | tar -xz
-          sudo mv quarto /usr/local/bin/
+        run: npm install -g @quarto-dev/quarto-cli
 
       - name: Convert Jupyter notebook to Markdown
         run: quarto convert rapport.ipynb --to markdown
