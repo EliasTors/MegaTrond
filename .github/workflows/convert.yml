@@ -27,10 +27,16 @@ jobs:
       run: |
         jupyter nbconvert --to markdown rapport.ipynb
 
-    - name: Rename to README.md
-      run: mv rapport.md README.md
+        - name: Rename to README.md
+        run: mv rapport.md README.md
+  
+    - name: Check for changes
+      id: changes
+      run: |
+        git diff --quiet && echo "::set-output name=changed::false" || echo "::set-output name=changed::true"
 
     - name: Commit and push changes
+      if: steps.changes.outputs.changed == 'true'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -38,7 +44,6 @@ jobs:
         git add *.png  # add this line to also commit any PNG images
         git commit -m "Update README.md"
         git push
-
 
 
   deploy:
