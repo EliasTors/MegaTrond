@@ -36,6 +36,9 @@ Som nevnt bruker vi en Arduino for å samle dataen fra sensorene og aggregere de
 # Lagring av data med RPi
 Som nevnt i introduksjonen så brukte vi en RPi for å lagre dataen etter at Arduinoen hadde samlet de. Vi valgte å bruke en RPi fordi det er enkeltstående, robust og godt dokumentert. Vi startet med å bruke en RPi Zero 2 der vi skrev dataen direkte til en CSV fil, men vi støttet på problemer med overoppheting etter kort tid. Vi valgte derfor å gå over til å bruke den litt mer robuste Raspberry Pi 2B+. Vi byttet også metoden vår for lagring til SQL lite for å redusere hvor tungt Pien måtte jobbe med prossesen. Etter disse endringene støttet vi ikke på flere problemer. Vi valgte å benytte Rasbian OS lite etter som vi ikke har behov for en GUI og det gjorde det lettere å få Pien stabil. Koden som kjører på RPien kan sees [her](https://github.com/EliasTors/MegaTrond/blob/main/data-collection/data-logger.py). Den er designet for å beholde data selv om Pien plutselig mister strøm. Vi aktiverer den ved å koble til Pien med SSH også bare kjøre det som et annet python program. Det eneste man trenger å installere i tillegg til standard python er biblioteket `pyserial` ettersom det er dette vi bruker for å samle data fra arduinoen over USB serial.
 
+# Korrigering av tidspunkt
+Raspberry Pien har ikke noe CMOS batteri og siden den ikke er koblet på nett var datoene den registrerte datoene ofte feil. For å korrigere dette bruker vi funksjonen under.
+
 
 ```python
 from data import dataHandler
@@ -78,7 +81,7 @@ p.plot_data(["data/day two.csv", "data/extrapolatedday1.csv", "data/extrapolated
 
 
     
-![png](rapport_files/rapport_8_0.png)
+![png](rapport_files/rapport_9_0.png)
     
 
 
