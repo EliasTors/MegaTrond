@@ -1,0 +1,6 @@
+title: "MegaTrond Pub"
+format: asciidoc
+site:
+  output_dir: "_site"
+pages:
+  - index.md
