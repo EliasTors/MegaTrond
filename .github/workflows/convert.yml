@@ -27,8 +27,8 @@ jobs:
       run: |
         jupyter nbconvert --to markdown rapport.ipynb
 
-        - name: Rename to README.md
-        run: mv rapport.md README.md
+    - name: Rename to README.md
+      run: mv rapport.md README.md
   
     - name: Check for changes
       id: changes
